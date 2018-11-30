@@ -7,34 +7,23 @@ import com.grid_tools.products.datamasker.IMaskFunction;
 
 public class SimonCCMaskingFunction implements IMaskFunction {
 
+	public static int counter = 0;
+	
 	@Override
-	public Object mask(Object... arg0) {
-		String originalCCNumber = (String) arg0[0];
-		
-//		works - doesn't throw error with no param1 entered
-		String argTest = (String) arg0[1];
-//		only works when param1 is entered
-//		int argtestTwo =  Integer.parseInt(arg0[1].toString());
-//		doesn't work even with param1 entered
-//		int argtestTwo = (int) arg0[1];
-
-
+	public Object mask(Object... args) {
+		String originalCCNumber = (String) args[0];		
+		String argTest = (String) args[1];
 		return argTest.concat(generateCCNumberOfLength(originalCCNumber.length())).concat(argTest);
 	}
 
 	private String generateCCNumberOfLength(int ccNumberLength) {
-
 		String ccString = "";
 		Random randInt = new Random();
 		for(int i=1 ; i<ccNumberLength+1; i++) {
-			if(i%5==0) {
-				ccString += "-";
-			}else {
-				String concatValue = String.valueOf(randInt.nextInt(9));
-				ccString += concatValue;
-			}
+			ccString += (i%5==0) ? "-" : String.valueOf(randInt.nextInt(9));
 		}
-		return ccString;
+		counter++;
+		return ccString+counter;
 
 	}
 
